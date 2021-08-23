@@ -1,0 +1,31 @@
+{
+  "name": "multer-firebase-storage",
+  "version": "0.0.1",
+  "description": "Multer Storage Engine for Firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khaosdoctor/multer-firebase-storage.git"
+  },
+  "keywords": [],
+  "author": "Lucas Santos <hello@lsantos.dev> (https://lsantos.dev/)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/khaosdoctor/multer-firebase-storage/issues"
+  },
+  "homepage": "https://github.com/khaosdoctor/multer-firebase-storage#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "ava": "^3.15.0",
+    "husky": "^7.0.1",
+    "standard-version": "^9.3.1"
+  },
+  "dependencies": {
+    "firebase-admin": "^9.11.1"
+  }
+}
