@@ -6,7 +6,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-20.04
-    if: "!contains(toJSON(github.event.commits.*.message), 'ci:') || !contains(toJSON(github.event.commits.*.message), 'ci(')"
+    if: "!contains(toJSON(github.event.commits.*.message), 'ci:')"
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x, 16.x]
