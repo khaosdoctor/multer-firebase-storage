@@ -36,7 +36,7 @@ class FirebaseStorage {
   /**
    * @param {MulterFirebaseOptions} opts Configuration Options
   **/
-  constructor (opts) {
+  constructor (opts, firebaseClient = null) {
     this.#directoryPath = opts.directoryPath || ''
     this.#namePrefix = opts.namePrefix || ''
     this.#nameSuffix = opts.nameSuffix || ''
@@ -45,12 +45,16 @@ class FirebaseStorage {
     this.#unique = opts.unique || false
     this.#bucket = opts.bucketName || this.#required('Bucket Name Required')
     this.#appName = opts.appName ? opts.appName : `multer-firebase-${this.#bucket}-${Date.now().toString(16)}`
-    this.#validateCredentials(opts.credentials)
+    this.#firebase = firebaseClient
 
-    this.#firebase = fbAdmin.initializeApp({
-      credential: fbAdmin.credential.cert(opts.credentials),
-      storageBucket: this.#bucket
-    }, this.#appName)
+    if (!firebaseClient) {
+      this.#validateCredentials(opts.credentials)
+
+      this.#firebase = fbAdmin.initializeApp({
+        credential: fbAdmin.credential.cert(opts.credentials),
+        storageBucket: this.#bucket
+      }, this.#appName)
+    }
   }
 
   /**
@@ -120,4 +124,4 @@ class FirebaseStorage {
  * @param {MulterFirebaseOptions} opts Configuration Options
  * @returns {FirebaseStorage}
  **/
-module.exports = (opts) => new FirebaseStorage(opts)
+module.exports = (opts, firebaseClient = null) => new FirebaseStorage(opts, firebaseClient)
