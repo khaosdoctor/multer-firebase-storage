@@ -10,8 +10,8 @@ const fbAdmin = require('firebase-admin')
 /**
  * @typedef MulterFirebaseOptions
  * @property {string} bucketName The bucket to upload to.
- * @property {string} destination The destination path of the file, this will be appended to the file name
  * @property {string | FirebaseCredentials} credentials Firebase credentials
+ * @property {string} [directoryPath] The destination path of the file, this will be appended to the file name
  * @property {{[fileName: string]: string}} [mimeMap] A map of file names to mime types
  * @property {appName} [appName] The name of the app.
  * @property {string} [namePrefix] The prefix to prepend to the file name.
@@ -20,7 +20,7 @@ const fbAdmin = require('firebase-admin')
  **/
 
 class FirebaseStorage {
-  #destination = ''
+  #directoryPath = ''
   #bucket = ''
   #namePrefix = ''
   #nameSuffix = ''
@@ -35,7 +35,7 @@ class FirebaseStorage {
    * @param {MulterFirebaseOptions} opts Configuration Options
   **/
   constructor (opts) {
-    this.#destination = opts.destination || ''
+    this.#directoryPath = opts.directoryPath || ''
     this.#namePrefix = opts.namePrefix || ''
     this.#nameSuffix = opts.nameSuffix || ''
     this.#mimeMap = opts.mimeMap || {}
