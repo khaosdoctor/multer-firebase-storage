@@ -16,6 +16,7 @@ const fbAdmin = require('firebase-admin')
  * @property {appName} [appName] The name of the app.
  * @property {string} [namePrefix] The prefix to prepend to the file name.
  * @property {string} [nameSuffix] The suffix to append to the file name.
+ * @property {boolean} [unique] If true, will append an unique identifier to the file name. (default: false)
  * @property {boolean} [public] Whether the file should be public or not (default false)
  **/
 
@@ -25,6 +26,7 @@ class FirebaseStorage {
   #namePrefix = ''
   #nameSuffix = ''
   #firebase = null
+  #unique = false
   #appName = ''
   #public = false
   #mimeMap = {}
@@ -40,6 +42,7 @@ class FirebaseStorage {
     this.#nameSuffix = opts.nameSuffix || ''
     this.#mimeMap = opts.mimeMap || {}
     this.#public = opts.public || false
+    this.#unique = opts.unique || false
     this.#bucket = opts.bucketName || this.#required('Bucket Name Required')
     this.#appName = opts.appName ? opts.appName : `multer-firebase-${this.#bucket}-${Date.now().toString(16)}`
     this.#validateCredentials(opts.credentials)
@@ -50,6 +53,9 @@ class FirebaseStorage {
     }, this.#appName)
   }
 
+  /**
+   * @private
+  **/
   _handleFile (_, file, cb) {
     const fileName = this.#getFileName(file)
     const bucketFile = this.#firebase.storage().bucket().file(fileName)
@@ -69,6 +75,7 @@ class FirebaseStorage {
         fileRef: bucketFile,
         path: fileName,
         bucket: this.#bucket,
+        bucketRef: this.#firebase.storage().bucket(this.#bucket),
         isPublic: this.#public
       }
       if (this.#public) {
@@ -80,6 +87,9 @@ class FirebaseStorage {
 
   }
 
+  /**
+   * @private
+  **/
   _removeFile (_, file, cb) {
     const fileRef = this.#firebase.storage().bucket().file(this.#getFileName(file))
     return fileRef.delete({ ignoreNotFound: true }, cb)
@@ -91,7 +101,7 @@ class FirebaseStorage {
   }
 
   #getFileName (file) {
-    return `${this.#destination ? this.#destination + '/' : ''}${this.#namePrefix}${file.originalname.split('.')[0]}${this.#nameSuffix}${file.originalname.split('.')[1] || ''}`
+    return `${this.#directoryPath ? this.#directoryPath + '/' : ''}${this.#namePrefix}${file.originalname.split('.')[0]}${this.#nameSuffix}${this.#unique ? Date.now().toString(16) : ''}.${file.originalname.split('.')[1] || ''}`
   }
 
   #validateCredentials (credentials) {
