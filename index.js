@@ -31,10 +31,11 @@ class FirebaseStorage {
   **/
   constructor (opts) {
     this.#destination = opts.destination || ''
+    this.#public = opts.public || false
     this.#bucket = opts.bucketName || this.#required('Bucket Name Required')
-
-    this.#validateCredentials(opts.credentials)
     this.#appName = opts.appName ? opts.appName : `multer-firebase-${this.#bucket}-${Date.now().toString(16)}`
+    this.#validateCredentials(opts.credentials)
+
     this.#firebase = fbAdmin.initializeApp({
       credential: fbAdmin.credential.cert(opts.credentials),
       storageBucket: this.#bucket
@@ -91,12 +92,12 @@ class FirebaseStorage {
   }
 
   #validateCredentials (credentials) {
-    if (!opts.credentials) return this.#required('Credentials Required')
-    if (!['string', 'object'].includes(typeof opts.credentials)) return this.#required('Credentials must be a string or service account object')
-    if (typeof opts.credentials === 'object'
-      && !'projectId' in opts.credentials
-      || !'privateKey' in opts.credentials
-      || !'clientEmail' in opts.credentials
+    if (!credentials) return this.#required('Credentials Required')
+    if (!['string', 'object'].includes(typeof credentials)) return this.#required('Credentials must be a string or service account object')
+    if (typeof credentials === 'object'
+      && !'projectId' in credentials
+      || !'privateKey' in credentials
+      || !'clientEmail' in credentials
     ) return this.#required('Credential model is missing keys, necessary keys are: projectId, privateKey, anc clientEmail')
     return credentials
   }
@@ -106,4 +107,4 @@ class FirebaseStorage {
  * @param {MulterFirebaseOptions} opts Configuration Options
  * @returns {FirebaseStorage}
  **/
-module.exports = (opts) => new MyCustomStorage(opts)
+module.exports = (opts) => new FirebaseStorage(opts)
