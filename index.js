@@ -13,7 +13,7 @@ const fbAdmin = require('firebase-admin')
  * @property {string | FirebaseCredentials} credentials Firebase credentials
  * @property {string} [directoryPath] The destination path of the file, this will be appended to the file name
  * @property {{[fileName: string]: string}} [mimeMap] A map of file names to mime types
- * @property {appName} [appName] The name of the app.
+ * @property {string} [appName] The name of the app.
  * @property {string} [namePrefix] The prefix to prepend to the file name.
  * @property {string} [nameSuffix] The suffix to append to the file name.
  * @property {boolean} [unique] If true, will append an unique identifier to the file name. (default: false)
