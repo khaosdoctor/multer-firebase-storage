@@ -46,6 +46,7 @@ class FirebaseStorage {
     this.#nameKey = opts.nameKey || null
   }
 
+  _handleFile (_, file, cb) {
     const fileName = this.#getFileName(file)
     const bucketFile = this.#firebase.storage().bucket().file(fileName)
     const outStream = fileRef.createWriteStream({
@@ -75,6 +76,7 @@ class FirebaseStorage {
 
   }
 
+  _removeFile (_, file, cb) {
     const fileRef = this.#firebase.storage().bucket().file(this.#getFileName(file))
     return fileRef.delete({ ignoreNotFound: true }, cb)
   }
