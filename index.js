@@ -25,6 +25,8 @@ class FirebaseStorage {
   #firebase = null
   #appName = ''
   #public = false
+  #mimeMap = {}
+
   #required = (message) => { throw new Error(message) }
 
   /**
@@ -34,6 +36,7 @@ class FirebaseStorage {
     this.#destination = opts.destination || ''
     this.#namePrefix = opts.namePrefix || ''
     this.#nameSuffix = opts.nameSuffix || ''
+    this.#mimeMap = opts.mimeMap || {}
     this.#public = opts.public || false
     this.#bucket = opts.bucketName || this.#required('Bucket Name Required')
     this.#appName = opts.appName ? opts.appName : `multer-firebase-${this.#bucket}-${Date.now().toString(16)}`
@@ -43,7 +46,6 @@ class FirebaseStorage {
       credential: fbAdmin.credential.cert(opts.credentials),
       storageBucket: this.#bucket
     }, this.#appName)
-    this.#nameKey = opts.nameKey || null
   }
 
   _handleFile (_, file, cb) {
@@ -51,7 +53,7 @@ class FirebaseStorage {
     const bucketFile = this.#firebase.storage().bucket().file(fileName)
     const outStream = bucketFile.createWriteStream({
       metadata: {
-        contentType: file.mimetype
+        contentType: this.#getMimetype(file)
       }
     })
     file.stream.pipe(outStream)
@@ -81,9 +83,9 @@ class FirebaseStorage {
     return fileRef.delete({ ignoreNotFound: true }, cb)
   }
 
-  #extractInfo (file) {
-    const mime = file.mimetype
-    return { mime, extension: mime.split('/').pop() }
+  #getMimetype (file) {
+    const mime = this.#mimeMap[file.originalname.split('.')[0]] || this.#mimeMap['*'] || file.mimetype
+    return mime
   }
 
   #getFileName (file) {
