@@ -20,7 +20,8 @@ const fbAdmin = require('firebase-admin')
 class FirebaseStorage {
   #destination = ''
   #bucket = ''
-  #nameKey = null
+  #namePrefix = ''
+  #nameSuffix = ''
   #firebase = null
   #appName = ''
   #public = false
@@ -31,6 +32,8 @@ class FirebaseStorage {
   **/
   constructor (opts) {
     this.#destination = opts.destination || ''
+    this.#namePrefix = opts.namePrefix || ''
+    this.#nameSuffix = opts.nameSuffix || ''
     this.#public = opts.public || false
     this.#bucket = opts.bucketName || this.#required('Bucket Name Required')
     this.#appName = opts.appName ? opts.appName : `multer-firebase-${this.#bucket}-${Date.now().toString(16)}`
@@ -43,8 +46,7 @@ class FirebaseStorage {
     this.#nameKey = opts.nameKey || null
   }
 
-  _handleFile (req, file, cb) {
-    const fileName = this.#getFileName(req, file)
+    const fileName = this.#getFileName(file)
     const bucketFile = this.#firebase.storage().bucket().file(fileName)
     const outStream = fileRef.createWriteStream({
       metadata: {
@@ -73,8 +75,7 @@ class FirebaseStorage {
 
   }
 
-  _removeFile (req, file, cb) {
-    const fileRef = this.#firebase.storage().bucket().file(this.#getFileName(req, file))
+    const fileRef = this.#firebase.storage().bucket().file(this.#getFileName(file))
     return fileRef.delete({ ignoreNotFound: true }, cb)
   }
 
@@ -83,12 +84,8 @@ class FirebaseStorage {
     return { mime, extension: mime.split('/').pop() }
   }
 
-  #getFileName (req, file) {
-    const info = this.#extractInfo(file)
-    if (this.#nameKey) {
-      return `${this.#destination ? this.#destination + '/' : ''}${req[this.#nameKey]}.${info.extension}`
-    }
-    return `${this.#destination ? this.#destination + '/' : ''}${file.originalName}.${info.extension}`
+  #getFileName (file) {
+    return `${this.#destination ? this.#destination + '/' : ''}${this.#namePrefix}${file.originalname.split('.')[0]}${this.#nameSuffix}${file.originalname.split('.')[1] || ''}`
   }
 
   #validateCredentials (credentials) {
