@@ -49,7 +49,7 @@ class FirebaseStorage {
   _handleFile (_, file, cb) {
     const fileName = this.#getFileName(file)
     const bucketFile = this.#firebase.storage().bucket().file(fileName)
-    const outStream = fileRef.createWriteStream({
+    const outStream = bucketFile.createWriteStream({
       metadata: {
         contentType: file.mimetype
       }
