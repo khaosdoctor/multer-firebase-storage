@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/khaosdoctor/multer-firebase-storage/compare/v1.0.3...v1.0.4) (2021-08-26)
+
+
+### Bug Fixes
+
+* **types:** fix appName type ([3dc8d0a](https://github.com/khaosdoctor/multer-firebase-storage/commit/3dc8d0a72f5035b8989f4d4de5e931f30371046c))
+
 ### [1.0.3](https://github.com/khaosdoctor/multer-firebase-storage/compare/v1.0.2...v1.0.3) (2021-08-26)
 
 
