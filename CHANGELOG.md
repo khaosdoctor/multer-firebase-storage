@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/khaosdoctor/multer-firebase-storage/compare/v0.1.1-beta.0...v1.0.0) (2021-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename parameter to directoryPath
+
+### Features
+
+* add firebaseClient option ([c0ee57c](https://github.com/khaosdoctor/multer-firebase-storage/commit/c0ee57ce5d0d6af75773ec4102417726c00bacad))
+* add unique option ([b34eef0](https://github.com/khaosdoctor/multer-firebase-storage/commit/b34eef0071711850f074f3174c070eafa08fe43c))
+
+
+### Improvements
+
+* **actions:** fix release action ([d41d084](https://github.com/khaosdoctor/multer-firebase-storage/commit/d41d08482d1370d80a6823e805690afeeb23ce7b))
+* **actions:** rename workflow ([62f89cc](https://github.com/khaosdoctor/multer-firebase-storage/commit/62f89cca502f7799a5d90e58b757655e7d22982f))
+* rename parameter to directoryPath ([6a00b7b](https://github.com/khaosdoctor/multer-firebase-storage/commit/6a00b7b4e6e653660e717ddb480de795becca2ac))
+
 ### [0.1.1-beta.0](https://github.com/khaosdoctor/multer-firebase-storage/compare/v0.1.0...v0.1.1-beta.0) (2021-08-26)
 
 
