@@ -10,11 +10,13 @@ const fbAdmin = require('firebase-admin')
 /**
  * @typedef MulterFirebaseOptions
  * @property {string} bucketName The bucket to upload to.
- * @property {appName} [appName] The name of the app.
  * @property {string} destination The destination path of the file, this will be appended to the file name
  * @property {string | FirebaseCredentials} credentials Firebase credentials
- * @property {string} [nameKey] The request key to use for the file name, if omitted the `file.name` property will be used
- * @property {boolean} [public] Whether the file should be public or not
+ * @property {{[fileName: string]: string}} [mimeMap] A map of file names to mime types
+ * @property {appName} [appName] The name of the app.
+ * @property {string} [namePrefix] The prefix to prepend to the file name.
+ * @property {string} [nameSuffix] The suffix to append to the file name.
+ * @property {boolean} [public] Whether the file should be public or not (default false)
  **/
 
 class FirebaseStorage {
