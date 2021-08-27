@@ -17,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/khaosdoctor/multer-firebase-storage/issues"
   },
+  "standard-version": {
+    "posttag": "git push --follow-tags origin main"
+  },
   "homepage": "https://github.com/khaosdoctor/multer-firebase-storage#readme",
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",

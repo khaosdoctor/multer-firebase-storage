@@ -1,12 +1,12 @@
 {
   "types": [
-      {"type": "feat", "section": "🌵 Features"},
-      {"type": "fix", "section": "🐞 Bug Fixes"},
-      {"type": "chore", "section": "🐙 Repository"},
+      {"type": "feat", "section": ":cactus: Features"},
+      {"type": "fix", "section": ":bug: Bug Fixes"},
+      {"type": "chore", "section": ":octocat: Repository"},
       {"type": "docs", "hidden": true},
       {"type": "style", "hidden": true},
-      {"type": "refactor", "section": "🦋 Improvements"},
-      {"type": "perf", "section": "🦋 Improvements"},
+      {"type": "refactor", "section": ":butterfly: Improvements"},
+      {"type": "perf", "section": ":butterfly: Improvements"},
       {"type": "test", "hidden": true}
   ]
 }
