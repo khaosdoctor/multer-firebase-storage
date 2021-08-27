@@ -8,6 +8,26 @@ const fbAdmin = require('firebase-admin')
  **/
 
 /**
+ * @typedef AvailableHooks
+ * @property {string} beforeUpload "beforeUpload"
+ * @property {string} afterUpload "afterUpload"
+ * @property {string} beforeDelete "beforeDelete"
+ * @property {string} afterDelete "afterDelete"
+ * @property {string} beforeInit "beforeInit"
+ * @property {string} afterInit "afterInit"
+ **/
+
+/**
+ * @typedef Hooks
+ * @property {(req: Request, file: Multer.File) => void} beforeUpload Called before the file is uploaded
+ * @property {(req: Request, file: Multer.File, fileRef: Firebase.Storage.File, bucketRef: Firebase.Storage.Bucket) => void} afterUpload Called after the file is uploaded
+ * @property {(req: Request, file: Multer.File) => void} beforeDelete Called after the file is uploaded
+ * @property {(req: Request, file: Multer.File, fileRef: Firebase.Storage.File, bucketRef: Firebase.Storage.Bucket) => void} afterDelete Called before the file is deleted
+ * @property {(instance: FirebaseStorage) => void} beforeInit Called before the Firebase client is initialized
+ * @property {(instance: FirebaseStorage, client: app.App) => void} afterInit Called after the Firebase client is initialized
+**/
+
+/**
  * @typedef MulterFirebaseOptions
  * @property {string} bucketName The bucket to upload to.
  * @property {string | FirebaseCredentials} credentials Firebase credentials
@@ -18,6 +38,7 @@ const fbAdmin = require('firebase-admin')
  * @property {string} [nameSuffix] The suffix to append to the file name.
  * @property {boolean} [unique] If true, will append an unique identifier to the file name. (default: false)
  * @property {boolean} [public] Whether the file should be public or not (default false)
+ * @property {{[hookName: string]: Hooks}} [hooks] Defined function hooks, these will be called during the lifecycle of the engine.
  **/
 
 class FirebaseStorage {
@@ -30,8 +51,12 @@ class FirebaseStorage {
   #appName = ''
   #public = false
   #mimeMap = {}
+  #hooks = null
 
   #required = (message) => { throw new Error(message) }
+  #callHook (hookName, ...params) {
+    if (this.#hooks && this.#hooks[hookName]) return this.#hooks[hookName].call(this, ...params)
+  }
 
   /**
    * @param {MulterFirebaseOptions} opts Configuration Options
@@ -43,9 +68,12 @@ class FirebaseStorage {
     this.#mimeMap = opts.mimeMap || {}
     this.#public = opts.public || false
     this.#unique = opts.unique || false
+    this.#hooks = opts.hooks || null
     this.#bucket = opts.bucketName || this.#required('Bucket Name Required')
     this.#appName = opts.appName ? opts.appName : `multer-firebase-${this.#bucket}-${Date.now().toString(16)}`
     this.#firebase = firebaseClient
+
+    this.#callHook('beforeInit', this)
 
     if (!firebaseClient) {
       this.#validateCredentials(opts.credentials)
@@ -55,12 +83,15 @@ class FirebaseStorage {
         storageBucket: this.#bucket
       }, this.#appName)
     }
+
+    this.#callHook('afterInit', this, this.#firebase)
   }
 
   /**
    * @private
   **/
-  _handleFile (_, file, cb) {
+  _handleFile (req, file, cb) {
+    this.#callHook('beforeUpload', req, file)
     const fileName = this.#getFileName(file)
     const bucketFile = this.#firebase.storage().bucket().file(fileName)
     const outStream = bucketFile.createWriteStream({
@@ -86,6 +117,7 @@ class FirebaseStorage {
         bucketFile.makePublic()
         returnObject.publicUrl = bucketFile.publicUrl()
       }
+      this.#callHook('afterUpload', req, file, returnObject.fileRef, returnObject.bucketRef)
       cb(null, returnObject)
     })
 
@@ -94,9 +126,14 @@ class FirebaseStorage {
   /**
    * @private
   **/
-  _removeFile (_, file, cb) {
+  _removeFile (req, file, cb) {
+    this.#callHook('beforeDelete', req, file)
     const fileRef = this.#firebase.storage().bucket().file(this.#getFileName(file))
-    return fileRef.delete({ ignoreNotFound: true }, cb)
+
+    fileRef.delete({ ignoreNotFound: true }, (err, data) => {
+      this.#callHook('afterDelete', req, file, fileRef, this.#firebase.storage().bucket(this.#bucket))
+      cb(err, data)
+    })
   }
 
   #getMimetype (file) {
