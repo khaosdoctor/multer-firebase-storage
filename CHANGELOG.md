@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.3](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.2...v3.0.3) (2022-04-08)
+
+
+### :octocat: Repository
+
+* remove node 10 from tests ([d34684f](https://github.com/khaosdoctor/multer-firebase-storage/commit/d34684f8b911e17954d978e5f815b26148145be9))
+
 ### [3.0.2](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.1...v3.0.2) (2022-04-08)
 
 ### [3.0.1](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.0...v3.0.1) (2022-04-08)
