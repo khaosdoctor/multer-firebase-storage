@@ -69,7 +69,7 @@ Firebase Storage supports the following setup options:
 
 ### Optional options
 
-- `directoryPath`: Will be appended to the file name to include the file in a subdirectory.
+- `directoryPath`: Will be prepended to the file name to include the file in a subdirectory.
   - For example: if the file name is `image.jpg` and the directory path is `images`, the resulting file name will be `images/image.jpg`. There's no need to add a trailing slash.
 - `appName`: Firebase allows only a single instance of its admin SDK to be executed per app. If you need more than one, specify the name of the app you want to use. Remember it __needs to be unique in the application__
 - `namePrefix`: The prefix to be added to the file name.
