@@ -4,6 +4,7 @@
   "description": "Multer Storage Engine for Firebase Storage",
   "main": "dist/index.js",
   "scripts": {
+    "prepare": "husky install",
     "release": "standard-version",
     "build": "tsc",
     "test": "npm run build && ava"
