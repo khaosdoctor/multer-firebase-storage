@@ -1,0 +1,11 @@
+tsconfig.json
+bun.lockb
+.github/
+.husky/
+.prettierrc
+.versionrc
+CHANGELOG.md
+.eslintrc.js
+commitlint.config.js
+tests/
+*.ts
