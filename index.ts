@@ -11,6 +11,9 @@ type FirebaseBucket = ReturnType<InstanceType<typeof Storage>['bucket']>
 type FirebaseFile = ReturnType<FirebaseBucket['file']>
 type FirebaseRequest = Parameters<FirebaseFile['delete']>['0']
 
+/**
+ * Subset of all firebase credentials with only the needed keys for the engine
+ */
 export type FirebaseCredentials = {
   projectId: string
   privateKey: string
@@ -26,65 +29,114 @@ export enum AvailableHooks {
   afterInit = 'afterInit',
 }
 
+/**
+ * Reference object from the uploaded file
+ */
 interface MulterFirebaseStorageFileReference {
+  /**
+   * The file reference object in firebase, this is not the file itself
+   * You can use firebase functions on this reference like delete and others
+   */
   fileRef: FirebaseFile,
+  /**
+   * The file path
+   */
   path: string,
+  /**
+   * Bucket name
+   */
   bucket: string,
+  /**
+   * The reference to the bucket in firebase to be manipulated
+   */
   bucketRef: FirebaseBucket,
+  /**
+   * The file is public or not
+   */
   isPublic: boolean,
+  /**
+   * If isPublic is true, this is the url to the file otherwise is undefined
+   */
   publicUrl?: string
 }
 
-/**
- * @property {string} bucketName The bucket to upload to.
- * @property {string | FirebaseCredentials} credentials Firebase credentials
- * @property {string} [directoryPath] The destination path of the file, this will be appended to the file name
- * @property {{[fileName: string]: string}} [mimeMap] A map of file names to mime types
- * @property {string} [appName] The name of the app.
- * @property {string} [namePrefix] The prefix to prepend to the file name.
- * @property {string} [nameSuffix] The suffix to append to the file name.
- * @property {boolean} [unique] If true, will append an unique identifier to the file name. (default: false)
- * @property {boolean} [public] Whether the file should be public or not (default false)
- * @property {{[hookName: string]: Hooks}} [hooks] Defined function hooks, these will be called during the lifecycle of the engine.
- **/
 interface MulterFirebaseOptions {
+  /**
+   * The bucket to upload to.
+   */
   bucketName: string
+  /**
+   * Firebase credentials
+   */
   credentials: string | FirebaseCredentials
+  /**
+   * The destination path of the file, this will be appended to the file name
+   */
   directoryPath?: string
+  /**
+   * A map of file names to mime types
+   */
   mimeMap?: MimeMap
+  /**
+   * The name of the app.
+   */
   appName?: string
+  /**
+   * The prefix to prepend to the file name.
+   */
   namePrefix?: string
+  /**
+   * The suffix to append to the file name.
+   */
   nameSuffix?: string
+  /**
+   * If true, will append an unique identifier to the file name. (default: false)
+   */
   unique?: boolean
+  /**
+   * Whether the file should be public or not (default false)
+   */
   public?: boolean
+  /**
+   * Defined function hooks, these will be called during the lifecycle of the engine.
+   */
   hooks?: { [hookName: string]: Hooks }
 }
 
-/**
- * @typedef Hooks
- * @property {(req: Request, file: Multer.File) => void} beforeUpload Called before the file is uploaded
- * @property {(req: Request, file: Multer.File, fileRef: Firebase.Storage.File, bucketRef: Firebase.Storage.Bucket) => void} afterUpload Called after the file is uploaded
- * @property {(req: Request, file: Multer.File) => void} beforeDelete Called after the file is uploaded
- * @property {(req: Request, file: Multer.File, fileRef: Firebase.Storage.File, bucketRef: Firebase.Storage.Bucket) => void} afterDelete Called before the file is deleted
- * @property {(instance: FirebaseStorage) => void} beforeInit Called before the Firebase client is initialized
- * @property {(instance: FirebaseStorage, client: app.App) => void} afterInit Called after the Firebase client is initialized
-**/
 interface Hooks {
+  /**
+   * Called before the file is uploaded
+   */
   beforeUpload?: (req: ExpressRequest, file: MulterFile) => void
+  /**
+   * Called after the file is uploaded
+   */
   afterUpload?: (
     req: ExpressRequest,
     file: MulterFile,
     fileRef: FirebaseFile,
     bucketRef: FirebaseBucket
   ) => void
+  /**
+   * Called before the file is deleted
+   */
   beforeDelete?: (req: ExpressRequest, file: MulterFile) => void
+  /**
+   * Called after the file is deleted
+   */
   afterDelete?: (
     req: ExpressRequest,
     file: MulterFile,
     fileRef: FirebaseFile,
     bucketRef: FirebaseBucket
   ) => void
+  /**
+   * Called before the Firebase client is initialized
+   */
   beforeInit?: (instance: FirebaseStorage) => void
+  /**
+   * Called after the Firebase client is initialized
+   */
   afterInit?: (instance: FirebaseStorage, client: fbAdmin.app.App) => void
 }
 
@@ -210,8 +262,10 @@ class FirebaseStorage {
 }
 
 /**
- * @param {MulterFirebaseOptions} opts Configuration Options
- * @returns {FirebaseStorage}
- **/
+ * The firebase storage engine for multer
+*/
+export default function (opts: MulterFirebaseOptions, firebaseClient: fbAdmin.app.App | null = null): FirebaseStorage {
+  return new FirebaseStorage(opts, firebaseClient)
+}
 module.exports = (opts: MulterFirebaseOptions, firebaseClient: Nullable<fbAdmin.app.App> = null) => new FirebaseStorage(opts, firebaseClient)
 
