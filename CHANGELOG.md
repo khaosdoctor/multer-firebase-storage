@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/khaosdoctor/multer-firebase-storage/compare/v4.1.0...v4.1.1) (2022-10-24)
+
+
+### :bug: Bug Fixes
+
+* wrong command in deploy ([58ad9a7](https://github.com/khaosdoctor/multer-firebase-storage/commit/58ad9a75229d32a4bb7cbe64e3cb20788d054186))
+
 ## [4.1.0](https://github.com/khaosdoctor/multer-firebase-storage/compare/v4.0.0...v4.1.0) (2022-10-24)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "multer-firebase-storage",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Multer Storage Engine for Firebase Storage",
   "main": "dist/index.js",
   "scripts": {
