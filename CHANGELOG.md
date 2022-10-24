@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.3...v4.0.0) (2022-10-24)
+
+
+### :octocat: Repository
+
+* **deps:** bump jose from 2.0.5 to 2.0.6 ([#3](https://github.com/khaosdoctor/multer-firebase-storage/issues/3)) ([3824668](https://github.com/khaosdoctor/multer-firebase-storage/commit/38246685faeff61818a9e22b7daa87364965c3cd))
+* **release:** update changelog ([eb300ef](https://github.com/khaosdoctor/multer-firebase-storage/commit/eb300ef7fae8b6d5fcb290a333ee91b7d3b45c5b))
+
 ### [3.0.3](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.2...v3.0.3) (2022-04-08)
 
 ## Breaking Change
