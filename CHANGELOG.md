@@ -27,30 +27,6 @@ All notable changes to this project will be documented in this file. See [standa
 * **release:** 3.1.0 ([637f18b](https://github.com/khaosdoctor/multer-firebase-storage/commit/637f18b79a8663a08628237132b9d493b6361b58))
 * **release:** update changelog ([eb300ef](https://github.com/khaosdoctor/multer-firebase-storage/commit/eb300ef7fae8b6d5fcb290a333ee91b7d3b45c5b))
 
-## [4.0.0](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.3...v4.0.0) (2022-10-24)
-
-
-### :octocat: Repository
-
-* **deps:** bump jose from 2.0.5 to 2.0.6 ([#3](https://github.com/khaosdoctor/multer-firebase-storage/issues/3)) ([3824668](https://github.com/khaosdoctor/multer-firebase-storage/commit/38246685faeff61818a9e22b7daa87364965c3cd))
-* **release:** update changelog ([eb300ef](https://github.com/khaosdoctor/multer-firebase-storage/commit/eb300ef7fae8b6d5fcb290a333ee91b7d3b45c5b))
-
-
-### :cactus: Features
-
-* add bun lockdb ([05fcbf2](https://github.com/khaosdoctor/multer-firebase-storage/commit/05fcbf215ca2acf2cce013bc726182a8e06a6aec))
-* add ts and eslint ([379950f](https://github.com/khaosdoctor/multer-firebase-storage/commit/379950fb15a1fb3dc7eecd70c59b514bed1dd8a9))
-* convert to typescript ([9daec23](https://github.com/khaosdoctor/multer-firebase-storage/commit/9daec2385c87ffd255de46b21004571800d6b16d))
-
-
-### :bug: Bug Fixes
-
-* add build script to release ([84353e1](https://github.com/khaosdoctor/multer-firebase-storage/commit/84353e1fc87df45134f4c4098dfed2724ca43efe))
-* remove extraneous deps ([b92e138](https://github.com/khaosdoctor/multer-firebase-storage/commit/b92e13849da0d4c76e79b3194eaf68707099d0b4))
-* update lockfile ([68ee4b2](https://github.com/khaosdoctor/multer-firebase-storage/commit/68ee4b29dba64478b7cf8652972060883384246c))
-* use npmignore to remove useless files ([4c66987](https://github.com/khaosdoctor/multer-firebase-storage/commit/4c66987a7c6bbf3398e3d70926b54817432e2900))
-* use only return types from fbadmin lib ([c76e36e](https://github.com/khaosdoctor/multer-firebase-storage/commit/c76e36ec5273edb9f8314dc7009b2c945fa52040))
-
 ### [3.0.3](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.2...v3.0.3) (2022-04-08)
 
 ## Breaking Change
