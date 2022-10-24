@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/khaosdoctor/multer-firebase-storage/compare/v4.0.0...v4.1.0) (2022-10-24)
+
+
+### :cactus: Features
+
+* add ts and eslint ([21a45b8](https://github.com/khaosdoctor/multer-firebase-storage/commit/21a45b846dc015fbf2b235be0b1ff81a1ef88891))
+
+
+### :bug: Bug Fixes
+
+* remove extraneous deps ([5f70113](https://github.com/khaosdoctor/multer-firebase-storage/commit/5f7011344be84028f960b664497e50dc5ed0cdce))
+* update lockfile ([6d95900](https://github.com/khaosdoctor/multer-firebase-storage/commit/6d9590071aeeccde7c9c4a0c7081e048e8aae03a))
+* use npmignore to remove useless files ([e7e203f](https://github.com/khaosdoctor/multer-firebase-storage/commit/e7e203f7daf8d602eeb5503c9ecf573aea707eb2))
+
+
+### :octocat: Repository
+
+* **release:** 3.1.0 ([2c9c87c](https://github.com/khaosdoctor/multer-firebase-storage/commit/2c9c87cbb0c283203d1fda33849f230e72b462ce))
+
 ## [4.0.0](https://github.com/khaosdoctor/multer-firebase-storage/compare/v3.0.3...v4.0.0) (2022-10-24)
 
 
