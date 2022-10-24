@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import fbAdmin from 'firebase-admin'
-import type { File as FirebaseFile } from '@google-cloud/storage/build/src/file'
-import type { Bucket as FirebaseBucket } from '@google-cloud/storage/build/src/bucket'
 import type FirebaseRequest from 'teeny-request/build/src/index'
-import type { DeleteCallback } from '@google-cloud/storage/build/src/nodejs-common/service-object'
+import type { Storage } from 'firebase-admin/lib/storage/storage'
 
 type Nullable<T> = T | null
 type MimeMap = { [fileName: string]: string }
 type MulterFile = Express.Multer.File
 type ExpressRequest = Express.Request
+type FirebaseBucket = ReturnType<InstanceType<typeof Storage>['bucket']>
+type FirebaseFile = ReturnType<FirebaseBucket['file']>
+type FirebaseRequest = Parameters<FirebaseFile['delete']>['0']
 
 export type FirebaseCredentials = {
   projectId: string
@@ -180,7 +181,7 @@ class FirebaseStorage {
   /**
    * @private
   **/
-  _removeFile (req: ExpressRequest, file: MulterFile, cb: DeleteCallback) {
+  _removeFile (req: ExpressRequest, file: MulterFile, cb: (err: Error | null, data?: unknown) => void) {
     this.#callHook('beforeDelete', req, file)
     const fileRef = this.#firebase!.storage().bucket().file(this.#getFileName(file))
 
