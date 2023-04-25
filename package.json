@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/khaosdoctor/multer-firebase-storage#readme",
   "devDependencies": {
-    "@commitlint/cli": "^16.2.3",
+    "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^16.2.1",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.11.4",
